@@ -10,7 +10,7 @@ class PickPlacesViewController: UIViewController {
     var resultsViewController: GMSAutocompleteResultsViewController?
     var searchController: UISearchController?
     var resultView: UITextView?
-    var coordinate = CLLocationCoordinate2D() //GMSPlace.coordinate()
+    var coordinate = CLLocationCoordinate2D() 
     var placeName = String()
     var latitude = CLLocationDegrees()
     var longitude = CLLocationDegrees()
@@ -25,27 +25,25 @@ class PickPlacesViewController: UIViewController {
         searchController = UISearchController(searchResultsController: resultsViewController)
         searchController?.searchResultsUpdater = resultsViewController
         
-        let subView = UIView(frame: CGRect(x: 0, y: 65.0, width: 375.0, height: 45.0))
+        let subView = UIView(frame: CGRect(x: 0, y: 25.0, width: 375.0, height: 45.0))
         
         subView.addSubview((searchController?.searchBar)!)
         view.addSubview(subView)
         searchController?.searchBar.sizeToFit()
         searchController?.hidesNavigationBarDuringPresentation = false
         
-        // When UISearchController presents the results view, present it in
-        // this view controller, not one further up the chain.
         definesPresentationContext = true
         
 
     }
 }
 
-// Handle the user's selection.
+
 extension PickPlacesViewController: GMSAutocompleteResultsViewControllerDelegate {
     func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
                            didAutocompleteWith place: GMSPlace) {
         searchController?.isActive = false
-        // Do something with the selected place.
+
         print("Place name: \(place.name)")
         print("Place address: \(String(describing: place.formattedAddress!))")
         print("Place attributions: \(String(describing: place.attributions))")
@@ -84,14 +82,10 @@ extension PickPlacesViewController: GMSAutocompleteResultsViewControllerDelegate
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destViewController = segue.destination as! MapViewController
-        
-        //        let selectedRowIndex = self.tableView.indexPathForSelectedRow
-        //        selectedRow = self.tableView.cellForRow(at: selectedRowIndex!)!
+
         
         destViewController.placeName = self.placeName
-        
         destViewController.latitude = self.latitude
-        
         destViewController.longitude = self.longitude
     }
 
